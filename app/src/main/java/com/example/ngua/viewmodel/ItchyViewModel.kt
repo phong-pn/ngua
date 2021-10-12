@@ -1,6 +1,5 @@
 package com.example.ngua.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.ngua.entity.ItchLog
 import com.example.ngua.room.Repository
@@ -13,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ItchyViewModel @Inject constructor(
     private val repository: Repository,
-    private val formater : SimpleDateFormat
+    private val formatter : SimpleDateFormat
 ):ViewModel(){
     fun insertItch(log: ItchLog) = GlobalScope.launch {
         withContext(Dispatchers.IO){
@@ -42,5 +41,5 @@ class ItchyViewModel @Inject constructor(
         return log
     }
 
-    fun getItchLogToday() = getItchLog(formater.format(Date()))
+    fun getItchLogToday() = getItchLog(formatter.format(Date()))
 }
