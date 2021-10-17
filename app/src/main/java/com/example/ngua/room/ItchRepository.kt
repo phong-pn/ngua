@@ -1,17 +1,21 @@
 package com.example.ngua.room
 
 import com.example.ngua.entity.ItchLog
-import java.util.*
+import com.example.ngua.room.interfaces.IRepository
 import javax.inject.Inject
 
-class Repository @Inject constructor(
-    private val itchDao: ItchDao
-){
-    suspend fun insertItch(log: ItchLog) = itchDao.insert(log)
+class ItchRepository @Inject constructor(
+    private val dao : ItchDao
+): IRepository<ItchLog> {
 
-    suspend fun updateItch(log: ItchLog) = itchDao.updateLog(log)
 
-    suspend fun getAllItchLog() = itchDao.getAllItchLog()
+    override suspend fun update(log: ItchLog) = dao.update(log)
 
-    suspend fun  getItchLog(date: String) = itchDao.getItchLog(date)
+    override suspend fun insert(log: ItchLog) = dao.insert(log)
+
+    override suspend fun delete(log: ItchLog) = dao.delete(log)
+
+    override suspend fun getAll() = dao.getAll()
+
+    override suspend fun get(date: String) = dao.get(date)
 }

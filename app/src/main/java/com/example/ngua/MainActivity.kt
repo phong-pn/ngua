@@ -37,10 +37,6 @@ class MainActivity : AppCompatActivity() {
     private val CHANNEL_ID = "heads_up_alerts"
     private val CHANNEL_NAME = "Heads Up Alerts"
 
-    private lateinit var decorView: View
-    private lateinit var lp : WindowManager.LayoutParams
-    private lateinit var viewGroup: ViewGroup
-
      lateinit var notificationManager : NotificationManagerCompat
 
     private fun createNotificationChannel() {
@@ -57,18 +53,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    @RequiresApi(Build.VERSION_CODES.O_MR1)
     override fun onCreate(savedInstanceState: Bundle?) {
-        decorView = window.decorView
-        lp = window.attributes
-        window.apply {
-            addFlags(FLAG_DIM_BEHIND)
-            lp.dimAmount = 0.4f
-
-        }
-
-        setShowWhenLocked(true)
-        setTurnScreenOn(true)
 
         super.onCreate(savedInstanceState)
 
@@ -77,53 +62,12 @@ class MainActivity : AppCompatActivity() {
         val NOTIFICATION_ID = 24756
         notificationManager = NotificationManagerCompat.from(this)
         createNotificationChannel()
-        val serviceIntent = Intent(this, ScreenService::class.java).apply { startService(this) }
-
-        var a = resources.configuration
-      //  a.screenHeightDp = metrics.heightPixels/2f.toInt()
-        createConfigurationContext(
-            a
-        )
-
-
-       Log.d(TAG_APP, a.toString())
+        //val serviceIntent = Intent(this, ScreenService::class.java).apply { startService(this) }
 
         setContentView(R.layout.activity_main)
 
-
-
         //notificationManager.notify(NOTIFICATION_ID, createNotification())
     }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        resources.displayMetrics.also { metrics ->
-            decorView.layoutParams.apply {
-                height = metrics.heightPixels/2
-                width = metrics.widthPixels/2
-                window.setLayout(width,height)
-
-            }
-        }
-
-        Log.d(TAG_APP, window.attributes.width.toString())
-    }
-
-
-    override fun attachBaseContext(newBase: Context?) {
-
-
-        super.attachBaseContext(newBase?.createConfigurationContext(Configuration().apply {
-            screenHeightDp = 300
-            this.screenLayout = Configuration.SCREENLAYOUT_SIZE_SMALL or Configuration.SCREENLAYOUT_LONG_YES
-        }))
-    }
-
-
-
-
-
-
 
     private fun createNotification() : Notification{
         val contentIntent = Intent(this, MainActivity::class.java)
@@ -143,12 +87,6 @@ class MainActivity : AppCompatActivity() {
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setOngoing(true)
             .build()
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
 }

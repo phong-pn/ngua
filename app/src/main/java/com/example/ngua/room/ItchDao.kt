@@ -1,21 +1,18 @@
 package com.example.ngua.room
 
 import androidx.room.*
+import androidx.room.Dao
 import com.example.ngua.entity.ItchLog
-import java.util.*
+import com.example.ngua.room.interfaces.IDao
 
 
 @Dao
-interface ItchDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(log: ItchLog)
-
-    @Update
-    suspend fun updateLog(log: ItchLog)
+interface ItchDao : IDao<ItchLog> {
 
     @Query("Select * from itchLog")
-    fun getAllItchLog() : List<ItchLog>?
+    suspend fun  getAll() : List<ItchLog>
 
     @Query("SELECT * FROM itchLog i WHERE i.date = :date")
-    fun getItchLog(date: String): ItchLog?
+    suspend fun  get(date: String): ItchLog
 }
+

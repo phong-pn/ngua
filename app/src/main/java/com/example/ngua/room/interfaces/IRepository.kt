@@ -1,13 +1,13 @@
-package com.example.ngua.room.`interface`
+package com.example.ngua.room.interfaces
 
-interface IRepository {
-    suspend fun<T> update(t : T)
+interface IRepository<T>{
+    suspend fun update(t : T)
 
-    suspend fun <T> insert(t : T)
+    suspend fun insert(t : T)
 
-    suspend fun <T> delete(t : T)
+    suspend fun delete(t : T)
 
-    suspend fun <T> getAll() : T
+    suspend fun  getAll() : List<T>
 
-    suspend fun <T,R> get(param : T) : R
+    suspend fun get(date : String) : T
 }
